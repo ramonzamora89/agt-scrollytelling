@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Glenda Tager: Análisis de Redes e Impacto Político</title>
+    
+    <!-- Password Access Protection Script (Blocking Prompt) -->
+    <script>
+        (function() {
+            var password = prompt("Por favor, introduce la contraseña de acceso:");
+            while (password !== "pikachu") {
+                if (password === null) {
+                    // User cancelled the prompt
+                    document.documentElement.innerHTML = "<h1 style='text-align: center; margin-top: 30vh; font-family: sans-serif; color: #e74c3c;'>Acceso Denegado</h1>";
+                    if (window.stop) window.stop();
+                    throw new Error("Acceso cancelado.");
+                }
+                password = prompt("Contraseña incorrecta. Por favor, introduce la contraseña correcta:");
+            }
+        })();
+    </script>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- D3.js v7 CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Main Scrollytelling Container -->
+    <div id="scrolly-container">
+        
+        <!-- Sticky Graphic Container (D3 Canvas lives here) -->
+        <div id="graphic">
+            <canvas id="network-canvas"></canvas>
+            <div id="legend-overlay">
+                <div class="legend-item"><span class="dot organic-dot"></span> Orgánico (89.45%)</div>
+                <div class="legend-item"><span class="dot inorganic-dot"></span> Inorgánico (10.55%)</div>
+                <div class="legend-item" id="zoom-hint">Desplázate para comenzar la historia</div>
+            </div>
+            <!-- Interactive Tooltip -->
+            <div id="tooltip"></div>
+        </div>
+
+        <!-- Scrollable Text Container (Story Steps) -->
+        <div id="scroll-text">
+            
+            <!-- Step 1: Introduction (Macro View) -->
+            <section class="step active" data-step="0">
+                <div class="step-card">
+                    <div class="meta-tag">Análisis AGT</div>
+                    <h1>Ana Glenda Tager: Análisis de Redes</h1>
+                    <p>El debate digital en torno a Ana Glenda Tager (AGT) y el proyecto de transporte urbano del Aerómetro en redes sociales revela complejas dinámicas de opinión pública, tensión municipal y redes de amplificación coordinada.</p>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-number">43,576</span>
+                            <span class="stat-label">Nodos (Cuentas)</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">81,864</span>
+                            <span class="stat-label">Relaciones</span>
+                        </div>
+                    </div>
+                    <p class="highlight-text">Exploremos la estructura completa de esta red de interacción mediante un viaje guiado desde la perspectiva general de su complejidad hasta el corazón de sus dinámicas narrativas.</p>
+                </div>
+            </section>
+
+            <!-- Step 2: Organic vs Inorganic -->
+            <section class="step" data-step="1">
+                <div class="step-card">
+                    <div class="meta-tag">Autenticidad</div>
+                    <h2>Tráfico orgánico vs. amplificación inorgánica</h2>
+                    <p>Un análisis detallado de la topología de la red y el comportamiento de las cuentas revela una clara división en la autenticidad del discurso:</p>
+                    <ul>
+                        <li><strong class="organic-text">Comportamiento orgánico:</strong> 38,980 cuentas (89.45%) que representan a la ciudadanía interactuando de manera natural, con reciprocidad y balances normales de seguidores.</li>
+                        <li><strong class="inorganic-text">Comportamiento inorgánico:</strong> 4,596 cuentas (10.55%) identificadas bajo patrones anómalos (alta densidad de retuits, baja reciprocidad y creación coordinada).</li>
+                    </ul>
+                    <p class="hint-msg">Fíjate cómo se iluminan de color rojo las cuentas con anomalías estructurales y operativas en los extremos de la red.</p>
+                </div>
+            </section>
+
+            <!-- Step 3: Narrative 1 (Pactos y Corrupción) -->
+            <section class="step" data-step="2" data-cluster="Pactos_y_Corrupcion">
+                <div class="step-card">
+                    <div class="meta-tag">Clúster Temático</div>
+                    <h2>Pactos y corrupción opaca</h2>
+                    <p>Este clúster representa la mayor masa crítica de indignación en la red. Se enfoca en denunciar supuestos pactos a puerta cerrada vinculados a la adjudicación del proyecto.</p>
+                    <div class="wordcloud-container">
+                        <img src="visuals/wc_Pactos_y_Corrupcion.png" alt="Nube de palabras Pactos y Corrupción" class="wc-image">
+                    </div>
+                    <div class="cluster-stats">
+                        <p><strong>Eje discursivo:</strong> Uso intensivo de palabras como <em>pactos</em>, <em>corrupción</em> y menciones directas a figuras de la oposición.</p>
+                        <h3>Influencers y cuentas clave:</h3>
+                        <div class="actor-badges" id="actors-pactos">
+                            <!-- Populated dynamically or statically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 4: Narrative 2 (Ineficiencia Técnica) -->
+            <section class="step" data-step="3" data-cluster="Ineficiencia_Tecnica">
+                <div class="step-card">
+                    <div class="meta-tag">Clúster Temático</div>
+                    <h2>Ineficiencia y crítica técnica</h2>
+                    <p>La conversación aquí se centra en la ineficiencia técnica percibida del proyecto de transporte y la calidad de los materiales empleados, además de los retrasos administrativos.</p>
+                    <div class="wordcloud-container">
+                        <img src="visuals/wc_Ineficiencia_Tecnica.png" alt="Nube de palabras Ineficiencia Técnica" class="wc-image">
+                    </div>
+                    <div class="cluster-stats">
+                        <p><strong>Eje discursivo:</strong> Críticas técnicas fundamentadas y debates de movilidad urbana mezclados con desencanto de gestión.</p>
+                        <h3>Influencers y cuentas clave:</h3>
+                        <div class="actor-badges" id="actors-ineficiencia"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 5: Narrative 3 (Decepción Política) -->
+            <section class="step" data-step="4" data-cluster="Decepcion_Politica">
+                <div class="step-card">
+                    <div class="meta-tag">Clúster Temático</div>
+                    <h2>Decepción política</h2>
+                    <p>Se observa un desencanto generalizado de los internautas hacia las instituciones municipales y los partidos gobernantes por no resolver el conflicto de forma transparente.</p>
+                    <div class="wordcloud-container">
+                        <img src="visuals/wc_Decepcion_Politica.png" alt="Nube de palabras Decepción Política" class="wc-image">
+                    </div>
+                    <div class="cluster-stats">
+                        <p><strong>Eje discursivo:</strong> Un sentimiento de abandono estatal y decepción profunda con los representantes electos.</p>
+                        <h3>Influencers y cuentas clave:</h3>
+                        <div class="actor-badges" id="actors-decepcion"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 6: Narrative 4 (Gestión Municipal) -->
+            <section class="step" data-step="5" data-cluster="Gestion_Municipal">
+                <div class="step-card">
+                    <div class="meta-tag">Clúster Temático</div>
+                    <h2>Gestión municipal</h2>
+                    <p>Este bloque agrupa la defensa oficial y los argumentos a favor de la viabilidad del Aerómetro y el desarrollo de infraestructura de transporte urbano.</p>
+                    <div class="wordcloud-container">
+                        <img src="visuals/wc_Gestion_Municipal.png" alt="Nube de palabras Gestión Municipal" class="wc-image">
+                    </div>
+                    <div class="cluster-stats">
+                        <p><strong>Eje discursivo:</strong> Llamados al orden, defensa del desarrollo urbano e infraestructura de movilidad vial.</p>
+                        <h3>Influencers y cuentas clave:</h3>
+                        <div class="actor-badges" id="actors-gestion"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 7: Aerómetro Only -->
+            <section class="step" data-step="6">
+                <div class="step-card">
+                    <div class="meta-tag">Análisis Aislado</div>
+                    <h2>Narrativa aislada: Aerómetro</h2>
+                    <p>¿Qué pasa cuando removemos el "ruido político" y las discusiones sobre figuras controversiales como Ana Glenda Tager (AGT)? La conversación se reconfigura de forma drástica:</p>
+                    <div class="wordcloud-container">
+                        <img src="visuals/wc_Aerometro_Only.png" alt="Nube de palabras Aerómetro Solo" class="wc-image">
+                    </div>
+                    <p>La discusión se reenfoca positivamente hacia la <strong>movilidad urbana limpia, el ordenamiento del tránsito y el desarrollo tecnológico</strong>. No obstante, este sub-debate representa una parte minoritaria de la red global, demostrando que el conflicto político domina por completo el ecosistema.</p>
+                </div>
+            </section>
+
+            <!-- Step 8: Inorganic Behavior and Bots -->
+            <section class="step" data-step="7">
+                <div class="step-card">
+                    <div class="meta-tag">Anatomía del Ataque</div>
+                    <h2>Caracterización de las cuentas inorgánicas</h2>
+                    <p>La red contiene <strong>4,596 cuentas inorgánicas (10.55%)</strong> que muestran comportamientos altamente automatizados y coordinados:</p>
+                    <ul>
+                        <li><strong>Falta de reciprocidad:</strong> Siguen masivamente a cientos de perfiles pero no cuentan con seguidores reales (relación inusual >10:1).</li>
+                        <li><strong>Creación coordinada:</strong> Bloques de cuentas creadas en las mismas fechas específicas para inundar la conversación coyuntural.</li>
+                        <li><strong>Amplificación artificial:</strong> Reenvíos masivos de contenidos hostiles and etiquetas negativas sin aportar debates constructivos.</li>
+                    </ul>
+                    <p>A continuación se muestra una pequeña muestra del listado de cuentas sospechosas identificadas por anomalías en su estructura de interacción:</p>
+                    <div id="bot-grid" class="actor-badges">
+                        <!-- Populated dynamically from JSON -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 9: Top Nodes & Zoom Final -->
+            <section class="step" data-step="8">
+                <div class="step-card">
+                    <div class="meta-tag">Hilos de Conexión</div>
+                    <h2>Top hubs: Los directores del debate</h2>
+                    <p>En el corazón de la red se sitúan los <strong>hubs de alta centralidad</strong>. Estos actores actúan como puentes de información (bridges) entre los distintos clústeres temáticos y son los encargados de viralizar las opiniones en el ecosistema.</p>
+                    <p class="highlight-text">Observa el zoom a los 20 perfiles más influyentes. Sus conexiones cruzadas unen los mundos del debate orgánico y el asedio coordinado.</p>
+                    
+                    <div class="hint-msg" style="margin-top: 1.25rem; border-color: var(--inorganic-red); background-color: #fef2f2; border-style: solid; border-width: 1px;">
+                        <strong class="inorganic-text">Anomalía de Detección:</strong> La cuenta <strong class="organic-text">@Eriol_Gt</strong> se clasifica algorítmicamente como <em>orgánica</em> debido a sus métricas de interacción bidireccional y reciprocidad. Sin embargo, debido al conocimiento del equipo de redes de hostigamiento digitales en Guatemala, se tiene conocimiento contextual del vinculo estrecho al netcenter <em>la Bendición</em>.
+                    </div>
+
+                    <div class="interactive-panel" style="margin-top: 1.5rem;">
+                        <p class="small-text">Puedes colocar el cursor o presionar sobre los nodos más grandes del canvas para ver su identificador y rol.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Script Application files -->
+    <script src="js/network.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
